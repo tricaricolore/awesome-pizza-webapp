@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api": "npx @rtk-query/codegen-openapi api/config/global-service-config.ts"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
