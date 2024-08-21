@@ -1,4 +1,5 @@
-import { SearchOrderRequest, ServiceApiBase, UpsertOrderRequest } from "@/api/src/generated";
+import { ServiceApi } from "@/api/src/enhanced";
+import { SearchOrderRequest, UpsertOrderRequest } from "@/api/src/generated";
 
 const useOrderHook = () => {
 
@@ -7,9 +8,9 @@ const useOrderHook = () => {
             data: upsertOrderResponse,
             isLoading: upsertOrderLoading
         }
-    ] = ServiceApiBase.usePutOrderUpsertMutation();
+    ] = ServiceApi.usePutOrderUpsertMutation();
     const upsertOrderPrivate = (request: UpsertOrderRequest) => {
-        upsertOrder({
+        return upsertOrder({
             upsertOrderRequest: request
         })
     }
@@ -19,7 +20,7 @@ const useOrderHook = () => {
             data: searchOrderResponse,
             isLoading: searchOrderLoading
         }
-    ] = ServiceApiBase.usePostOrderSearchMutation();
+    ] = ServiceApi.usePostOrderSearchMutation();
     const searchOrderPrivate = (request: SearchOrderRequest) => {
         searchOrder({
             searchOrderRequest: request
@@ -31,7 +32,7 @@ const useOrderHook = () => {
             data: getOrderResponse,
             isLoading: getOrderLoading
         }
-    ] = ServiceApiBase.useLazyGetOrderGetByIdQuery();
+    ] = ServiceApi.useLazyGetOrderGetByIdQuery();
     const getOrderPrivate = (id: string) => {
         getOrder({ id })
     }
@@ -41,7 +42,7 @@ const useOrderHook = () => {
             data: deleteOrderResponse,
             isLoading: deleteOrderLoading
         }
-    ] = ServiceApiBase.useDeleteOrderDeleteByIdMutation();
+    ] = ServiceApi.useDeleteOrderDeleteByIdMutation();
     const deleteOrderPrivate = (id: string) => {
         deleteOrder({ id })
     }

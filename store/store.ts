@@ -1,9 +1,9 @@
-import { ServiceApiBase } from "@/api/src/generated";
+import { ServiceApi } from "@/api/src/enhanced";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
     reducer: {
-        [ServiceApiBase.reducerPath]: ServiceApiBase.reducer
+        [ServiceApi.reducerPath]: ServiceApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         immutableCheck: true,
@@ -14,5 +14,5 @@ export const store = configureStore({
             }
         }
     })
-        .concat(ServiceApiBase.middleware)
+        .concat(ServiceApi.middleware)
 })

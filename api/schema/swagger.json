@@ -5,7 +5,98 @@
         "version": "1.0"
     },
     "paths": {
+        "/Customer/Upsert": {
+            "put": {
+                "tags": [
+                    "Customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Food/Search": {
+            "post": {
+                "tags": [
+                    "Food"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchFoodRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SearchFoodResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/Lookup/Status": {
+            "get": {
+                "tags": [
+                    "Lookup"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/LookupDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Lookup/FoodType": {
+            "get": {
+                "tags": [
+                    "Lookup"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/LookupDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Lookup/Ingredient": {
             "get": {
                 "tags": [
                     "Lookup"
@@ -148,6 +239,39 @@
     },
     "components": {
         "schemas": {
+            "FoodDto": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "type": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "ingredients": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LookupDto"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
             "LookupDto": {
                 "type": "object",
                 "properties": {
@@ -176,6 +300,13 @@
                     },
                     "status": {
                         "type": "string",
+                        "nullable": true
+                    },
+                    "foods": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderFoodDto"
+                        },
                         "nullable": true
                     },
                     "creationUser": {
@@ -210,6 +341,19 @@
                 },
                 "additionalProperties": false
             },
+            "OrderFoodDto": {
+                "type": "object",
+                "properties": {
+                    "food": {
+                        "$ref": "#/components/schemas/FoodDto"
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
             "ResponseDto": {
                 "type": "object",
                 "properties": {
@@ -218,6 +362,45 @@
                     },
                     "detail": {
                         "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SearchFoodRequest": {
+                "type": "object",
+                "properties": {
+                    "page": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SearchFoodResponse": {
+                "type": "object",
+                "properties": {
+                    "page": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalItems": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "foods": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FoodDto"
+                        },
                         "nullable": true
                     }
                 },
@@ -233,6 +416,10 @@
                     "pageSize": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "status": {
+                        "type": "string",
+                        "nullable": true
                     },
                     "deleted": {
                         "type": "boolean",
@@ -272,6 +459,10 @@
                     "id": {
                         "type": "string",
                         "format": "uuid",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "string",
                         "nullable": true
                     }
                 },

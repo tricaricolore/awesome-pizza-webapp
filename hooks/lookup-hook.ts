@@ -1,11 +1,14 @@
-import { ServiceApiBase } from "@/api/src/generated";
+import { ServiceApi } from "@/api/src/enhanced";
 
 const useLookupHook = () => {
 
-    const [statusGet, { data: statusResponse, isLoading: statusLoading }] = ServiceApiBase.useLazyGetLookupStatusQuery();
+    const [statusGet, { data: statusResponse, isLoading: statusLoading }] = ServiceApi.useLazyGetLookupStatusQuery();
+    const statusGetPrivate = () => {
+        statusGet(undefined, true)
+    }
 
     return {
-        statusGet,
+        statusGet: statusGetPrivate,
         statusResponse,
 
         isLoadingLookup: statusLoading
