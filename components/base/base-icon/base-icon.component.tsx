@@ -1,4 +1,4 @@
-import Icon from "@mui/material/Icon"
+import Icon from "@mui/material/Icon";
 import SvgIcon from "@mui/material/SvgIcon";
 
 type IconComponentType = typeof SvgIcon;
@@ -14,8 +14,8 @@ const BaseIcon = (props: IProps) => {
 
     return (
         <Icon component={icon} fontSize="inherit" titleAccess={hoverTitle} />
-    )
-}
+    );
+};
 
 export default BaseIcon;
-export type { IconComponentType, IProps as BaseIconProps }
+export type { IProps as BaseIconProps, IconComponentType };

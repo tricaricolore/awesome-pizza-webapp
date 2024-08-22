@@ -1,10 +1,9 @@
 "use client";
 
-import useLookupHook from "@/hooks/lookup-hook";
-import useOrderHook from "@/hooks/order-hook";
+import useOrderHook from "@/hooks/order.hook";
 import { useEffect, useMemo } from "react";
 
-const useAdminHook = () => {
+const useAdminPageHook = () => {
 
     const {
         upsertOrder,
@@ -20,7 +19,7 @@ const useAdminHook = () => {
         isLoadingOrder: isLoadingTakenOrder
     } = useOrderHook();
 
-    const hasTakenOrder = useMemo(() => (searchTakenOrderResponse?.orders && searchTakenOrderResponse.orders.length > 0) ?? false, [searchTakenOrderResponse])
+    const hasTakenOrder = useMemo(() => (searchTakenOrderResponse?.orders && searchTakenOrderResponse.orders.length > 0) ?? false, [searchTakenOrderResponse]);
 
     useEffect(() => {
         searchOrder({});
@@ -28,7 +27,7 @@ const useAdminHook = () => {
 
     useEffect(() => {
         searchTakenOrder({ status: "ILA" });
-    }, [searchOrderResponse])
+    }, [searchOrderResponse]);
 
     return {
         hasTakenOrder,
@@ -42,7 +41,7 @@ const useAdminHook = () => {
         isLoading: {
             search: isLoadingOrder || isLoadingTakenOrder
         }
-    }
-}
+    };
+};
 
-export default useAdminHook;
+export default useAdminPageHook;

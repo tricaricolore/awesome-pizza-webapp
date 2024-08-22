@@ -1,23 +1,17 @@
 import { OrderDtoRead } from "@/api/src/generated";
-import { useState } from "react";
 import PillStatus from "@/components/pill-status/pill-status.component";
-import DeleteIcon from '@mui/icons-material/Delete';
-import SwipeUpAltIcon from '@mui/icons-material/SwipeUpAlt';
+import { TableOrderProps } from "@/components/table-order/table-order.props";
 import CheckIcon from '@mui/icons-material/Check';
-import React from "react";
-import { Box, Collapse, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import SwipeUpAltIcon from '@mui/icons-material/SwipeUpAlt';
+import { Box, Collapse, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import React, { useState } from "react";
 
-interface IProps {
-    readonly order: OrderDtoRead;
-    readonly updateOrder: (id: string | undefined, status: string | null | undefined) => void;
-    readonly hasTakenOrder: boolean;
-}
+const OrderRow = (props: TableOrderProps & { order: OrderDtoRead; }) => {
 
-const OrderRow = (props: IProps) => {
-
-    const { order, updateOrder, hasTakenOrder } = props;
+    const { readonly, order } = props;
 
     const [open, setOpen] = useState<boolean>(false);
 
@@ -42,23 +36,28 @@ const OrderRow = (props: IProps) => {
                 <TableCell align="right">{order.creationDate}</TableCell>
                 <TableCell align="right">{order.creationUser}</TableCell>
                 <TableCell align="right"><PillStatus code={order.status} /></TableCell>
-                <TableCell align="right">
-                    {order.status === "INV" && (
-                        <IconButton disabled={hasTakenOrder}>
-                            <SwipeUpAltIcon onClick={() => updateOrder(order.code, "ILA")} color={hasTakenOrder ? "disabled" : "info"} titleAccess="Prendi in carico" />
-                        </IconButton>
-                    )}
-                    {order.status === "ILA" && (
-                        <IconButton>
-                            <CheckIcon onClick={() => updateOrder(order.code, "COM")} color="success" titleAccess="Completa" />
-                        </IconButton>
-                    )}
-                    {(order.status === "ILA" || order.status === "INV") && (
-                        <IconButton>
-                            <DeleteIcon onClick={() => updateOrder(order.code, "ELI")} color="error" titleAccess="Elimina" />
-                        </IconButton>
-                    )}
-                </TableCell>
+                {!readonly && (
+                    <TableCell align="right">
+                        {order.status === "INV" && (
+                            <IconButton disabled={props.hasTakenOrder}>
+                                <SwipeUpAltIcon onClick={() => props.updateOrder(order.code, "ILA")}
+                                    color={props.hasTakenOrder ? "disabled" : "info"} titleAccess="Prendi in carico" />
+                            </IconButton>
+                        )}
+                        {order.status === "ILA" && (
+                            <IconButton>
+                                <CheckIcon onClick={() => props.updateOrder(order.code, "COM")} color="success"
+                                    titleAccess="Completa" />
+                            </IconButton>
+                        )}
+                        {(order.status === "ILA" || order.status === "INV") && (
+                            <IconButton>
+                                <DeleteIcon onClick={() => props.updateOrder(order.code, "ELI")} color="error"
+                                    titleAccess="Elimina" />
+                            </IconButton>
+                        )}
+                    </TableCell>
+                )}
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -73,7 +72,7 @@ const OrderRow = (props: IProps) => {
                                         <TableCell>Codice</TableCell>
                                         <TableCell>Alimento</TableCell>
                                         <TableCell align="right">N. di alimenti</TableCell>
-                                        <TableCell align="right">Prezzo Totale</TableCell>
+                                        <TableCell align="right">Prezzo</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -89,6 +88,15 @@ const OrderRow = (props: IProps) => {
                                             </TableCell>
                                         </TableRow>
                                     ))}
+                                    <TableRow>
+                                        <TableCell />
+                                        <TableCell />
+                                        <TableCell />
+                                        {order.foods && <TableCell align="right">Totale: € {order.foods.reduce((accumulator, currentValue) => {
+                                            console.log({ currentValue });
+                                            return accumulator + ((currentValue.food?.price ?? 0) * (currentValue.amount ?? 0));
+                                        }, 0)}</TableCell>}
+                                    </TableRow>
                                 </TableBody>
                             </Table>
                         </Box>
@@ -97,7 +105,7 @@ const OrderRow = (props: IProps) => {
             </TableRow>
 
         </React.Fragment>
-    )
-}
+    );
+};
 
 export default OrderRow;

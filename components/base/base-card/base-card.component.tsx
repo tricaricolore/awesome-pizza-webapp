@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, Card, CardActions, CardContent, CardMedia, Link, Typography } from "@mui/material";
-import { BaseCardProps } from "./base-card.model";
+import { Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import BaseIcon from "../base-icon/base-icon.component";
+import { BaseCardProps } from "./base-card.model";
 
 const BaseCard = (props: BaseCardProps) => {
 
@@ -29,11 +29,11 @@ const BaseCard = (props: BaseCardProps) => {
             </CardContent>
             {action && (
                 <CardActions>
-                    <Link href={`/${action.redirect}`}>{action.text}</Link>
+                    {action}
                 </CardActions>
             )}
         </Card>
     );
-}
+};
 
 export default BaseCard;

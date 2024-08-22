@@ -7,4 +7,4 @@ export const api = createApi({
         baseUrl: baseUrl,
     }),
     endpoints: () => ({})
-})
+});

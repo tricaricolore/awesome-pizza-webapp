@@ -1,3 +1,5 @@
+"use client";
+
 import { ServiceApi } from "@/api/src/enhanced";
 import { SearchOrderRequest, UpsertOrderRequest } from "@/api/src/generated";
 
@@ -12,8 +14,8 @@ const useOrderHook = () => {
     const upsertOrderPrivate = (request: UpsertOrderRequest) => {
         return upsertOrder({
             upsertOrderRequest: request
-        })
-    }
+        });
+    };
 
     const [
         searchOrder, {
@@ -24,8 +26,8 @@ const useOrderHook = () => {
     const searchOrderPrivate = (request: SearchOrderRequest) => {
         searchOrder({
             searchOrderRequest: request
-        })
-    }
+        });
+    };
 
     const [
         getOrder, {
@@ -34,8 +36,8 @@ const useOrderHook = () => {
         }
     ] = ServiceApi.useLazyGetOrderGetByIdQuery();
     const getOrderPrivate = (id: string) => {
-        getOrder({ id })
-    }
+        getOrder({ id });
+    };
 
     const [
         deleteOrder, {
@@ -44,8 +46,8 @@ const useOrderHook = () => {
         }
     ] = ServiceApi.useDeleteOrderDeleteByIdMutation();
     const deleteOrderPrivate = (id: string) => {
-        deleteOrder({ id })
-    }
+        deleteOrder({ id });
+    };
 
     return {
         upsertOrder: upsertOrderPrivate,
@@ -61,7 +63,7 @@ const useOrderHook = () => {
         deleteOrderResponse,
 
         isLoadingOrder: upsertOrderLoading || searchOrderLoading || getOrderLoading || deleteOrderLoading
-    }
-}
+    };
+};
 
 export default useOrderHook;

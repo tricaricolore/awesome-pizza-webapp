@@ -1,6 +1,6 @@
 "use client";
 
-import useLookupHook from '@/hooks/lookup-hook';
+import useLookupHook from '@/hooks/lookup.hook';
 import { Chip, ChipProps } from '@mui/material';
 import { memo, useEffect, useMemo } from 'react';
 
@@ -23,22 +23,22 @@ const PillStatus = memo(function PillStatus(props: IProps) {
     const pillColor: ChipProps["color"] = useMemo(() => {
         switch (code) {
             case "INV":
-                return "secondary"
+                return "secondary";
             case "ILA":
-                return "info"
+                return "info";
             case "COM":
-                return "success"
+                return "success";
             case "ELI":
-                return "error"
+                return "error";
 
             default:
-                return "secondary"
+                return "secondary";
         }
-    }, [code])
+    }, [code]);
 
     return (
         <Chip label={status?.description} color={pillColor} />
-    )
+    );
 });
 
-export default PillStatus
+export default PillStatus;

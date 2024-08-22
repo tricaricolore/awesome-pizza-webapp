@@ -15,4 +15,4 @@ export const store = configureStore({
         }
     })
         .concat(ServiceApi.middleware)
-})
+});
