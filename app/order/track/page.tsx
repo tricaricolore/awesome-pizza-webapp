@@ -1,6 +1,7 @@
 "use client";
 
 import useCustomerTrackPageHook from "@/app/order/track/page-hook";
+import BaseLoader from "@/components/base/base-loader/base-loader.component";
 import TableOrderComponent from "@/components/table-order/table-order.component";
 import { Button, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
@@ -10,7 +11,7 @@ const Page = () => {
     const { getOrderResponse, register, onSubmit, errors, isLoading } = useCustomerTrackPageHook();
 
     return (
-        <>
+        <BaseLoader isActive={isLoading}>
             <Grid marginBottom={4} textAlign={"end"}>
                 <Button variant="contained" href="/order">
                     Torna agli ordini
@@ -35,7 +36,7 @@ const Page = () => {
                     }} />
                 )}
             </form>
-        </>
+        </BaseLoader>
     );
 };
 

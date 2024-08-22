@@ -1,5 +1,6 @@
 "use client";
 
+import BaseLoader from "@/components/base/base-loader/base-loader.component";
 import TableOrderComponent from "@/components/table-order/table-order.component";
 import { Button, Grid } from "@mui/material";
 import useAdminPageHook from "./page-hook";
@@ -19,19 +20,15 @@ const Page = () => {
         });
     };
 
-    if (!searchOrderResponse || isLoading.search) {
-        return <>Loading...</>;
-    }
-
     return (
-        <>
+        <BaseLoader isActive={isLoading.search}>
             <Grid marginBottom={4} textAlign={"end"}>
                 <Button variant="contained" href="/">
                     Torna alla Homepage
                 </Button>
             </Grid>
-            <TableOrderComponent orders={searchOrderResponse} hasTakenOrder={hasTakenOrder} updateOrder={updateOrder} readonly={false} />
-        </>
+            {searchOrderResponse && <TableOrderComponent orders={searchOrderResponse} hasTakenOrder={hasTakenOrder} updateOrder={updateOrder} readonly={false} />}
+        </BaseLoader>
     );
 };
 

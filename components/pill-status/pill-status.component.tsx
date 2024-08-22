@@ -1,5 +1,6 @@
 "use client";
 
+import OrderStatusEnum from "@/enum/OrderStatusEnum";
 import useLookupHook from '@/hooks/lookup.hook';
 import { Chip, ChipProps } from '@mui/material';
 import { memo, useEffect, useMemo } from 'react';
@@ -22,13 +23,13 @@ const PillStatus = memo(function PillStatus(props: IProps) {
 
     const pillColor: ChipProps["color"] = useMemo(() => {
         switch (code) {
-            case "INV":
+            case OrderStatusEnum.Inviata:
                 return "secondary";
-            case "ILA":
+            case OrderStatusEnum.Inlavorazione:
                 return "info";
-            case "COM":
+            case OrderStatusEnum.Completato:
                 return "success";
-            case "ELI":
+            case OrderStatusEnum.Eliminata:
                 return "error";
 
             default:

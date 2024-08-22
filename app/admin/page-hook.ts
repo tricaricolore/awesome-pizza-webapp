@@ -1,5 +1,6 @@
 "use client";
 
+import OrderStatusEnum from "@/enum/OrderStatusEnum";
 import useOrderHook from "@/hooks/order.hook";
 import { useEffect, useMemo } from "react";
 
@@ -26,7 +27,7 @@ const useAdminPageHook = () => {
     }, []);
 
     useEffect(() => {
-        searchTakenOrder({ status: "ILA" });
+        searchTakenOrder({ status: OrderStatusEnum.Inlavorazione });
     }, [searchOrderResponse]);
 
     return {

@@ -1,6 +1,7 @@
 import { OrderDtoRead } from "@/api/src/generated";
 import PillStatus from "@/components/pill-status/pill-status.component";
 import { TableOrderProps } from "@/components/table-order/table-order.props";
+import OrderStatusEnum from "@/enum/OrderStatusEnum";
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -13,7 +14,7 @@ const OrderRow = (props: TableOrderProps & { order: OrderDtoRead; }) => {
 
     const { readonly, order } = props;
 
-    const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(readonly);
 
     return (
         <React.Fragment>
@@ -38,21 +39,21 @@ const OrderRow = (props: TableOrderProps & { order: OrderDtoRead; }) => {
                 <TableCell align="right"><PillStatus code={order.status} /></TableCell>
                 {!readonly && (
                     <TableCell align="right">
-                        {order.status === "INV" && (
+                        {order.status === OrderStatusEnum.Inviata && (
                             <IconButton disabled={props.hasTakenOrder}>
-                                <SwipeUpAltIcon onClick={() => props.updateOrder(order.code, "ILA")}
+                                <SwipeUpAltIcon onClick={() => props.updateOrder(order.code, OrderStatusEnum.Inlavorazione)}
                                     color={props.hasTakenOrder ? "disabled" : "info"} titleAccess="Prendi in carico" />
                             </IconButton>
                         )}
-                        {order.status === "ILA" && (
+                        {order.status === OrderStatusEnum.Inlavorazione && (
                             <IconButton>
-                                <CheckIcon onClick={() => props.updateOrder(order.code, "COM")} color="success"
+                                <CheckIcon onClick={() => props.updateOrder(order.code, OrderStatusEnum.Completato)} color="success"
                                     titleAccess="Completa" />
                             </IconButton>
                         )}
-                        {(order.status === "ILA" || order.status === "INV") && (
+                        {(order.status === OrderStatusEnum.Inlavorazione || order.status === OrderStatusEnum.Inviata) && (
                             <IconButton>
-                                <DeleteIcon onClick={() => props.updateOrder(order.code, "ELI")} color="error"
+                                <DeleteIcon onClick={() => props.updateOrder(order.code, OrderStatusEnum.Eliminata)} color="error"
                                     titleAccess="Elimina" />
                             </IconButton>
                         )}
@@ -92,10 +93,7 @@ const OrderRow = (props: TableOrderProps & { order: OrderDtoRead; }) => {
                                         <TableCell />
                                         <TableCell />
                                         <TableCell />
-                                        {order.foods && <TableCell align="right">Totale: € {order.foods.reduce((accumulator, currentValue) => {
-                                            console.log({ currentValue });
-                                            return accumulator + ((currentValue.food?.price ?? 0) * (currentValue.amount ?? 0));
-                                        }, 0)}</TableCell>}
+                                        {order.foods && <TableCell align="right">Totale: € {order.foods.reduce((accumulator, currentValue) => accumulator + ((currentValue.food?.price ?? 0) * (currentValue.amount ?? 0)), 0)}</TableCell>}
                                     </TableRow>
                                 </TableBody>
                             </Table>
