@@ -5,25 +5,6 @@
         "version": "1.0"
     },
     "paths": {
-        "/Customer/Upsert": {
-            "put": {
-                "tags": [
-                    "Customer"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ResponseDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/Food/Search": {
             "post": {
                 "tags": [
@@ -463,6 +444,15 @@
                     },
                     "status": {
                         "type": "string",
+                        "nullable": true
+                    },
+                    "foods": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "integer",
+                            "format": "int32",
+                            "nullable": true
+                        },
                         "nullable": true
                     }
                 },
